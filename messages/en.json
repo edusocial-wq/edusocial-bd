@@ -1,0 +1,61 @@
+{
+  "nav": {
+    "home": "Home",
+    "courses": "Courses",
+    "exams": "Exams",
+    "reader": "E-Reader",
+    "community": "Community",
+    "explore": "Explore",
+    "studio": "Creative Studio",
+    "dashboard": "Dashboard",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "profile": "Profile"
+  },
+  "home": {
+    "hero_title": "Learn ICT. Ace HSC.",
+    "hero_subtitle": "Bangladesh's best platform for Class 11-12 ICT — textbook content, practice exams, and a student community.",
+    "get_started": "Get Started Free",
+    "explore_courses": "Explore Courses"
+  },
+  "dashboard": {
+    "welcome": "Welcome back",
+    "continue_learning": "Continue Learning",
+    "upcoming_exams": "Upcoming Exams",
+    "weekly_progress": "Weekly Progress",
+    "badges": "Badges"
+  },
+  "exam": {
+    "start": "Start Exam",
+    "submit": "Submit Exam",
+    "time_remaining": "Time Remaining",
+    "autosaved": "Auto-saved",
+    "score": "Your Score",
+    "correct": "Correct",
+    "incorrect": "Incorrect",
+    "unanswered": "Unanswered"
+  },
+  "explore": {
+    "news": "News",
+    "scholarships": "Scholarships",
+    "careers": "Career Guide"
+  },
+  "studio": {
+    "title": "Creative AI Studio",
+    "poem": "Write a Poem",
+    "music": "Create Music",
+    "photo": "Edit Photo",
+    "art": "AI Art",
+    "credits_remaining": "Credits remaining today"
+  },
+  "auth": {
+    "email_label": "Email address",
+    "phone_label": "Phone number",
+    "otp_label": "Enter OTP",
+    "send_otp": "Send OTP",
+    "verify": "Verify",
+    "magic_link_sent": "Check your email for the sign-in link.",
+    "or": "or"
+  }
+}
