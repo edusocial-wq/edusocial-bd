@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Hind_Siliguri } from "next/font/google";
+import { Noto_Sans_Bengali } from "next/font/google";
 import "./globals.css";
 
-const hindSiliguri = Hind_Siliguri({
-  subsets: ["bengali"],       // latin excluded — its "1" glyph is ambiguous next to Bengali script
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-hind",
+const notoSansBengali = Noto_Sans_Bengali({
+  subsets: ["bengali"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-noto-bengali",
 });
 
 export const metadata: Metadata = {
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="bn" suppressHydrationWarning>
-      <body className={`${hindSiliguri.variable} font-sans antialiased bg-background text-foreground`}>
+      <body className={`${notoSansBengali.variable} font-sans antialiased bg-background text-foreground`}>
         {children}
       </body>
     </html>

@@ -11,26 +11,26 @@ const questions = [
   },
   {
     q: "দশমিক ১০ কে বাইনারিতে প্রকাশ করলে কত হয়?",
-    options: ["1010", "1100", "1001", "0110"],
-    answer: 0,
+    options: ["1100", "1001", "1010", "0110"],
+    answer: 2,
     explanation: "১০ = ৮+২ = 2³+2¹ = 1010 (বাইনারি)।",
   },
   {
     q: "অক্টাল সংখ্যা পদ্ধতিতে ব্যবহৃত অঙ্কগুলো কী কী?",
-    options: ["0-7", "0-8", "0-9", "0-F"],
-    answer: 0,
+    options: ["0-8", "0-7", "0-9", "0-F"],
+    answer: 1,
     explanation: "অক্টাল পদ্ধতির বেস ৮, তাই 0 থেকে 7 পর্যন্ত অঙ্ক ব্যবহার হয়।",
   },
   {
     q: "হেক্সাডেসিমেল পদ্ধতিতে ১০ কে কোন প্রতীক দিয়ে প্রকাশ করা হয়?",
-    options: ["A", "B", "C", "D"],
-    answer: 0,
+    options: ["B", "C", "D", "A"],
+    answer: 3,
     explanation: "হেক্সাডেসিমেলে A=10, B=11, C=12, D=13, E=14, F=15।",
   },
   {
     q: "বাইনারি 1111 কে দশমিকে রূপান্তর করলে কত হয়?",
-    options: ["১৫", "১৪", "১৬", "১৩"],
-    answer: 0,
+    options: ["১৪", "১৬", "১৫", "১৩"],
+    answer: 2,
     explanation: "1111 = 2³+2²+2¹+2⁰ = 8+4+2+1 = 15।",
   },
   {
@@ -41,14 +41,14 @@ const questions = [
   },
   {
     q: "দশমিক ২৫৫ কে হেক্সাডেসিমেলে প্রকাশ করলে কত হয়?",
-    options: ["FF", "FE", "EF", "F0"],
-    answer: 0,
+    options: ["FE", "EF", "F0", "FF"],
+    answer: 3,
     explanation: "255 = 16×15 + 15 = FF (হেক্সাডেসিমেল)।",
   },
   {
     q: "১ বাইট সমান কত বিট?",
-    options: ["৮ বিট", "৪ বিট", "১৬ বিট", "৩২ বিট"],
-    answer: 0,
+    options: ["৪ বিট", "৮ বিট", "১৬ বিট", "৩২ বিট"],
+    answer: 1,
     explanation: "১ বাইট = ৮ বিট। বিট হলো বাইনারি ডিজিটের সংক্ষিপ্ত রূপ।",
   },
   {
@@ -60,12 +60,12 @@ const questions = [
   {
     q: "BCD-এর পূর্ণ নাম কী?",
     options: [
-      "Binary Coded Decimal",
       "Binary Central Digit",
       "Bit Coded Decimal",
       "Binary Coded Data",
+      "Binary Coded Decimal",
     ],
-    answer: 0,
+    answer: 3,
     explanation: "BCD = Binary Coded Decimal। প্রতিটি দশমিক অঙ্ককে আলাদাভাবে বাইনারিতে প্রকাশ করে।",
   },
 ];

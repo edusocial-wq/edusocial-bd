@@ -1,0 +1,114 @@
+"use client";
+import { useState } from "react";
+
+const questions = [
+  {
+    q: "SR ফ্লিপ-ফ্লপে S=1, R=0 হলে আউটপুট Q কত?",
+    options: ["1 (Set)", "0 (Reset)", "অপরিবর্তিত", "অনির্ধারিত"],
+    answer: 0,
+    explanation: "SR ফ্লিপ-ফ্লপে S=1, R=0 মানে Set অবস্থা। Q=1 হয়।",
+  },
+  {
+    q: "SR ফ্লিপ-ফ্লপে S=0, R=1 হলে আউটপুট Q কত?",
+    options: ["1 (Set)", "অনির্ধারিত", "0 (Reset)", "অপরিবর্তিত"],
+    answer: 2,
+    explanation: "S=0, R=1 মানে Reset অবস্থা। Q=0 হয়।",
+  },
+  {
+    q: "SR ফ্লিপ-ফ্লপে নিষিদ্ধ (forbidden) অবস্থা কোনটি?",
+    options: ["S=0, R=0", "S=1, R=1", "S=1, R=0", "S=0, R=1"],
+    answer: 1,
+    explanation: "S=R=1 হলে আউটপুট অনির্ধারিত হয়ে যায়। এটি SR ফ্লিপ-ফ্লপের forbidden state।",
+  },
+  {
+    q: "D ফ্লিপ-ফ্লপে ক্লক পালসে D=1 হলে Q কত হবে?",
+    options: ["0", "D'", "অপরিবর্তিত", "1"],
+    answer: 3,
+    explanation: "D ফ্লিপ-ফ্লপে ক্লক পালসে Q = D। D=1 হলে Q=1।",
+  },
+  {
+    q: "JK ফ্লিপ-ফ্লপে J=1, K=1 হলে আউটপুট কী হয়?",
+    options: ["Set (Q=1)", "Reset (Q=0)", "Toggle (পূর্ব অবস্থার বিপরীত)", "অনির্ধারিত"],
+    answer: 2,
+    explanation: "JK ফ্লিপ-ফ্লপে J=K=1 হলে ক্লক পালসে আউটপুট Toggle হয় (0→1 বা 1→0)। SR-এর forbidden state সমস্যা দূর করতে এটি ব্যবহার হয়।",
+  },
+  {
+    q: "T ফ্লিপ-ফ্লপে T=1 হলে কী ঘটে?",
+    options: ["Toggle", "Set", "Reset", "কিছুই না"],
+    answer: 0,
+    explanation: "T (Toggle) ফ্লিপ-ফ্লপে T=1 হলে প্রতিটি ক্লক পালসে আউটপুট toggle হয়। T=0 হলে অপরিবর্তিত থাকে।",
+  },
+  {
+    q: "কোন ফ্লিপ-ফ্লপকে 'Delay' ফ্লিপ-ফ্লপও বলে?",
+    options: ["SR ফ্লিপ-ফ্লপ", "JK ফ্লিপ-ফ্লপ", "T ফ্লিপ-ফ্লপ", "D ফ্লিপ-ফ্লপ"],
+    answer: 3,
+    explanation: "D ফ্লিপ-ফ্লপকে Delay ফ্লিপ-ফ্লপ বলে কারণ ইনপুট D-এর মান এক ক্লক বিলম্বে আউটপুটে প্রকাশ পায়।",
+  },
+  {
+    q: "SR ফ্লিপ-ফ্লপে S=0, R=0 হলে কী হয়?",
+    options: ["Q=1 হয়", "আউটপুট অপরিবর্তিত থাকে", "Q=0 হয়", "Toggle হয়"],
+    answer: 1,
+    explanation: "S=R=0 মানে No Change অবস্থা। Q তার আগের মান ধরে রাখে।",
+  },
+  {
+    q: "ফ্লিপ-ফ্লপ কী ধরনের সার্কিট?",
+    options: ["Sequential logic circuit", "Combinational logic circuit", "Arithmetic circuit", "Memory-less circuit"],
+    answer: 0,
+    explanation: "ফ্লিপ-ফ্লপ Sequential logic circuit — এটি বর্তমান ইনপুট ও আগের অবস্থা উভয়ের উপর নির্ভর করে।",
+  },
+  {
+    q: "কোন ফ্লিপ-ফ্লপ SR ফ্লিপ-ফ্লপের forbidden state সমস্যা সমাধান করে?",
+    options: ["D ফ্লিপ-ফ্লপ", "T ফ্লিপ-ফ্লপ", "RS ল্যাচ", "JK ফ্লিপ-ফ্লপ"],
+    answer: 3,
+    explanation: "JK ফ্লিপ-ফ্লপে J=K=1 করলে forbidden state-এর পরিবর্তে Toggle হয়, তাই SR-এর সমস্যা দূর হয়।",
+  },
+];
+
+export default function FlipFlopQuiz() {
+  const [phase, setPhase] = useState<"idle"|"quiz"|"result">("idle");
+  const [current, setCurrent] = useState(0);
+  const [selected, setSelected] = useState<number|null>(null);
+  const [answers, setAnswers] = useState<(number|null)[]>(Array(10).fill(null));
+
+  const score = answers.filter((a,i)=>a===questions[i].answer).length;
+  function startQuiz(){setAnswers(Array(10).fill(null));setCurrent(0);setSelected(null);setPhase("quiz");}
+  function handleSelect(idx:number){if(selected!==null)return;setSelected(idx);const u=[...answers];u[current]=idx;setAnswers(u);}
+  function next(){if(current===9)setPhase("result");else{setCurrent(c=>c+1);setSelected(null);}}
+
+  const q=questions[current];
+  const grade=score>=9?"A+":score>=8?"A":score>=7?"A-":score>=5?"B":score>=3?"C":"F";
+  const gc=score>=7?"#16a34a":score>=5?"#d97706":"#dc2626";
+
+  if(phase==="idle") return <div style={{textAlign:"center",padding:"2rem 0"}}><p style={{color:"#6b7280",marginBottom:"1.5rem"}}>১০টি MCQ — ফ্লিপ-ফ্লপ</p><button onClick={startQuiz} style={bs("#9333ea")}>কুইজ শুরু করুন →</button></div>;
+  if(phase==="result") return (
+    <div style={{textAlign:"center",padding:"2rem 0"}}>
+      <div style={{fontSize:"4rem",marginBottom:"0.5rem"}}>{score>=7?"🎉":score>=5?"👍":"📚"}</div>
+      <div style={{fontSize:"3rem",fontWeight:800,color:gc}}>{grade}</div>
+      <div style={{fontSize:"1.5rem",fontWeight:700,margin:"0.5rem 0"}}>{score} / ১০ সঠিক</div>
+      <div style={{textAlign:"left",margin:"1.5rem 0"}}>
+        {questions.map((qq,i)=>{const ok=answers[i]===qq.answer;return(<div key={i} style={{display:"flex",gap:"0.75rem",padding:"0.75rem",borderRadius:"0.5rem",marginBottom:"0.5rem",background:ok?"#f0fdf4":"#fef2f2",border:`1px solid ${ok?"#bbf7d0":"#fecaca"}`}}><span>{ok?"✅":"❌"}</span><div><div style={{fontSize:"0.875rem",fontWeight:600,color:"#1f2937"}}>{i+1}. {qq.q}</div>{!ok&&<div style={{fontSize:"0.8rem",color:"#16a34a",marginTop:"0.25rem"}}>সঠিক: {qq.options[qq.answer]}</div>}</div></div>);})}
+      </div>
+      <button onClick={startQuiz} style={bs("#9333ea")}>আবার চেষ্টা করুন</button>
+    </div>
+  );
+
+  const isCorrect=selected===q.answer;
+  return (
+    <div>
+      <div style={{height:"6px",background:"#e5e7eb",borderRadius:"99px",marginBottom:"1.5rem"}}><div style={{height:"100%",width:`${((current+1)/10)*100}%`,background:"#9333ea",borderRadius:"99px",transition:"width 0.3s"}}/></div>
+      <div style={{background:"#fdf4ff",border:"1px solid #e9d5ff",borderRadius:"0.75rem",padding:"1.25rem",marginBottom:"1.25rem",fontWeight:600,fontSize:"1.05rem",color:"#0f172a",lineHeight:1.6}}>{current+1}. {q.q}</div>
+      <div style={{display:"flex",flexDirection:"column",gap:"0.625rem",marginBottom:"1.25rem"}}>
+        {q.options.map((opt,i)=>{
+          let bg="#fff",border="#d1d5db",color="#374151";
+          if(selected!==null){if(i===q.answer){bg="#f0fdf4";border="#86efac";color="#15803d";}else if(i===selected&&i!==q.answer){bg="#fef2f2";border="#fca5a5";color="#b91c1c";}else{bg="#f9fafb";color="#9ca3af";}}
+          return <button key={i} onClick={()=>handleSelect(i)} disabled={selected!==null} style={{display:"flex",alignItems:"center",gap:"0.75rem",padding:"0.875rem 1rem",borderRadius:"0.625rem",border:`2px solid ${border}`,background:bg,color,textAlign:"left",cursor:selected!==null?"default":"pointer",fontSize:"0.95rem",fontWeight:500}}>
+            <span style={{display:"inline-flex",alignItems:"center",justifyContent:"center",width:"1.75rem",height:"1.75rem",borderRadius:"50%",background:i===q.answer&&selected!==null?"#16a34a":selected===i&&i!==q.answer?"#dc2626":"#e5e7eb",color:selected!==null&&(i===q.answer||i===selected)?"#fff":"#374151",fontSize:"0.8rem",fontWeight:700,flexShrink:0}}>{["ক","খ","গ","ঘ"][i]}</span>{opt}
+          </button>;
+        })}
+      </div>
+      {selected!==null&&<div style={{padding:"1rem",borderRadius:"0.625rem",background:isCorrect?"#f0fdf4":"#fef9c3",border:`1px solid ${isCorrect?"#86efac":"#fde68a"}`,marginBottom:"1.25rem",fontSize:"0.9rem",color:"#1e293b"}}><strong>{isCorrect?"✅ সঠিক!":"❌ ভুল।"}</strong> {q.explanation}</div>}
+      {selected!==null&&<button onClick={next} style={bs("#9333ea")}>{current===9?"ফলাফল দেখুন →":"পরের প্রশ্ন →"}</button>}
+    </div>
+  );
+}
+function bs(bg:string):React.CSSProperties{return{background:bg,color:"#fff",border:"none",borderRadius:"0.625rem",padding:"0.75rem 1.75rem",fontSize:"1rem",fontWeight:600,cursor:"pointer"};}

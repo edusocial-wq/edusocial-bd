@@ -1,7 +1,8 @@
 import Quiz from "./quiz";
+import Link from "next/link";
 
 export const metadata = {
-  title: "সংখ্যা পদ্ধতি — EduSocial BD Demo",
+  title: "সংখ্যা পদ্ধতি — EduSocial BD Demo | HSC ICT অধ্যায় ৩",
   description: "HSC ICT: Number Systems — read the topic then take a 10-question quiz",
 };
 
@@ -11,11 +12,16 @@ export default function DemoPage() {
       style={{
         minHeight: "100vh",
         background: "#f1f5f9",
-        fontFamily: "system-ui, 'Hind Siliguri', 'Noto Sans Bengali', sans-serif",
+        fontFamily: "'Noto Sans Bengali', system-ui, sans-serif",
         padding: "2rem 1rem",
       }}
     >
       <div style={{ maxWidth: "720px", margin: "0 auto" }}>
+
+        {/* breadcrumb */}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.85rem", marginBottom: "1.25rem", flexWrap: "wrap" }}>
+          <Link href="/demo/chapter3" style={{ color: "#2563eb", textDecoration: "none", fontWeight: 600 }}>← অধ্যায় ৩ সূচি</Link>
+        </div>
 
         {/* Header */}
         <div style={{ marginBottom: "2rem" }}>
@@ -30,7 +36,7 @@ export default function DemoPage() {
                 fontWeight: 600,
               }}
             >
-              HSC ICT · অধ্যায় ৩
+              HSC ICT · অধ্যায় ৩.১
             </span>
             <span style={{ color: "#6b7280", fontSize: "0.875rem" }}>EduSocial BD</span>
           </div>
@@ -269,9 +275,10 @@ export default function DemoPage() {
           <Quiz />
         </div>
 
-        <p style={{ textAlign: "center", color: "#94a3b8", fontSize: "0.8rem", marginTop: "2rem" }}>
-          EduSocial BD · HSC ICT Demo
-        </p>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "2rem", flexWrap: "wrap", gap: "1rem" }}>
+          <Link href="/demo/chapter3" style={{ color: "#2563eb", fontWeight: 600, textDecoration: "none", fontSize: "0.9rem" }}>← অধ্যায় ৩ সূচি</Link>
+          <Link href="/demo/binary-arithmetic" style={{ color: "#2563eb", fontWeight: 600, textDecoration: "none", fontSize: "0.9rem" }}>বাইনারি গণিত →</Link>
+        </div>
       </div>
     </div>
   );
