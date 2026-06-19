@@ -3,7 +3,7 @@ import { Hind_Siliguri } from "next/font/google";
 import "./globals.css";
 
 const hindSiliguri = Hind_Siliguri({
-  subsets: ["latin", "bengali"],
+  subsets: ["bengali"],       // latin excluded — its "1" glyph is ambiguous next to Bengali script
   weight: ["300", "400", "500", "600", "700"],
   variable: "--font-hind",
 });

@@ -11,7 +11,7 @@ export default function DemoPage() {
       style={{
         minHeight: "100vh",
         background: "#f1f5f9",
-        fontFamily: "'Hind Siliguri', 'Noto Sans Bengali', system-ui, sans-serif",
+        fontFamily: "system-ui, 'Hind Siliguri', 'Noto Sans Bengali', sans-serif",
         padding: "2rem 1rem",
       }}
     >
