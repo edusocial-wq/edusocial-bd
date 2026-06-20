@@ -4,14 +4,11 @@ import Resend from "next-auth/providers/resend";
 import Credentials from "next-auth/providers/credentials";
 import { db } from "@/lib/db";
 import { z } from "zod";
+import { authConfig } from "@/auth.config";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  ...authConfig,
   adapter: PrismaAdapter(db),
-  session: { strategy: "jwt" },
-  pages: {
-    signIn: "/login",
-    error: "/login",
-  },
   providers: [
     Resend({
       from: process.env.EMAIL_FROM!,
@@ -38,7 +35,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           .safeParse(credentials);
         if (!parsed.success) return null;
 
-        // Verify OTP stored in VerificationToken table
         const token = await db.verificationToken.findFirst({
           where: {
             identifier: parsed.data.phone,
@@ -58,22 +54,4 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.role = (user as { role?: string }).role ?? "STUDENT";
-        token.tier = (user as { tier?: string }).tier ?? "FREE";
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (token) {
-        session.user.id = token.id as string;
-        session.user.role = token.role as string;
-        session.user.tier = token.tier as string;
-      }
-      return session;
-    },
-  },
 });
