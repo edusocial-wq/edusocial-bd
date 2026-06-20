@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Noto_Sans_Bengali } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const notoSansBengali = Noto_Sans_Bengali({
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="bn" suppressHydrationWarning>
       <body className={`${notoSansBengali.variable} font-sans antialiased bg-background text-foreground`}>
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
