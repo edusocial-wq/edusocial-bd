@@ -19,7 +19,7 @@ export default function RegisterPage() {
   const [otpSent, setOtpSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState<React.ReactNode>("");
 
   async function handleEmailSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -32,7 +32,16 @@ export default function RegisterPage() {
     });
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
-      setError(data.error ?? "নিবন্ধনে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+      if (data.error === "ALREADY_EXISTS") {
+        setError(
+          <span>
+            এই ইমেইল ইতিমধ্যে নিবন্ধিত।{" "}
+            <Link href="/login" className="underline font-medium">লগইন করুন</Link>
+          </span>
+        );
+      } else {
+        setError(data.error ?? "নিবন্ধনে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+      }
       setLoading(false);
       return;
     }

@@ -3,8 +3,8 @@ import { db } from "@/lib/db";
 import { z } from "zod";
 
 const schema = z.union([
-  z.object({ name: z.string().min(1), email: z.string().email(), phone: z.undefined() }),
-  z.object({ name: z.string().min(1), phone: z.string().min(11), email: z.undefined() }),
+  z.object({ name: z.string().min(1), email: z.string().email() }),
+  z.object({ name: z.string().min(1), phone: z.string().min(11) }),
 ]);
 
 export async function POST(req: Request) {
@@ -14,24 +14,24 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "তথ্য সঠিক নয়।" }, { status: 400 });
   }
 
-  const { name, email, phone } = parsed.data;
+  const data = parsed.data;
 
   try {
-    if (email) {
-      const existing = await db.user.findUnique({ where: { email } });
+    if ("email" in data) {
+      const existing = await db.user.findUnique({ where: { email: data.email } });
       if (existing) {
-        // Already registered — just send the magic link, no error
+        return NextResponse.json({ error: "ALREADY_EXISTS" }, { status: 409 });
+      }
+      await db.user.create({ data: { name: data.name, email: data.email } });
+    } else {
+      const existing = await db.user.findUnique({ where: { phone: data.phone } });
+      if (existing) {
+        if (!existing.name) {
+          await db.user.update({ where: { phone: data.phone }, data: { name: data.name } });
+        }
         return NextResponse.json({ ok: true });
       }
-      await db.user.create({ data: { name, email } });
-    } else if (phone) {
-      const existing = await db.user.findUnique({ where: { phone } });
-      if (existing) {
-        // Update name if not set
-        if (!existing.name) await db.user.update({ where: { phone }, data: { name } });
-        return NextResponse.json({ ok: true });
-      }
-      await db.user.create({ data: { name, phone } });
+      await db.user.create({ data: { name: data.name, phone: data.phone } });
     }
     return NextResponse.json({ ok: true });
   } catch {
