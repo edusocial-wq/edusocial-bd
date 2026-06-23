@@ -46,7 +46,7 @@ export default function RegisterPage() {
       return;
     }
     // Send magic link to sign them in
-    await signIn("resend", { email, redirect: false });
+    await signIn("resend", { email, redirect: false, callbackUrl: "/dashboard" });
     setLoading(false);
     setMessage("আপনার ইমেইলে একটি সাইন-ইন লিঙ্ক পাঠানো হয়েছে।");
   }

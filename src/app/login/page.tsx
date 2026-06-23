@@ -24,7 +24,7 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     setError("");
-    const res = await signIn("resend", { email, redirect: false });
+    const res = await signIn("resend", { email, redirect: false, callbackUrl: "/dashboard" });
     setLoading(false);
     if (res?.error) {
       setError("ইমেইল পাঠাতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");

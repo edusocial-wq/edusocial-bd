@@ -8,6 +8,18 @@ export const authConfig: NextAuthConfig = {
   },
   providers: [],
   callbacks: {
+    async redirect({ url, baseUrl }) {
+      // Relative callback URLs → resolve against the app origin
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      // Same-origin absolute URLs are allowed through (e.g. /dashboard)
+      try {
+        if (new URL(url).origin === baseUrl) return url;
+      } catch {
+        // fall through
+      }
+      // Default landing after auth
+      return `${baseUrl}/dashboard`;
+    },
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
